@@ -1,0 +1,20 @@
+#!/usr/bin/bash
+
+git config --global user.email "$USER@icloud.com"
+git config --global user.name "$USER"
+
+# Install pkgs
+sudo pacman -Syyu $(cat pkgs | egrep -v "^\s*(#|$)")
+bash ./lvim
+
+## Remove temp
+sudo pacman -Rdd ttf-iosevka-nerd xfce4-notifyd
+
+## bin dir
+mkdir ~/.bin
+wget -q --show-progress https://github.com/NyaMisty/AltServer-Linux/releases/download/v0.0.5/AltServer-x86_64 -O ~/.bin/AltServer-x86_64
+
+## Dotfile
+git clone https://github.com/hmanhng/dotfile.git ~/dotfiles && cd ~/dotfiles && ./install.sh lvim zsh
+
+sudo systemctl enable bluetooth.service sddm-plymouth.service systemd-resolved.service
